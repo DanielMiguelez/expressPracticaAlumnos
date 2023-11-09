@@ -1,12 +1,9 @@
 import Router from 'express';
-import helloRouter from './hello/hello.router.js';
-import byeRouter from './bye/bye.router.js';
+import questionsRouter from './questions/questions.router.js'
 
 const router = Router();
 
-router.use('/hello', helloRouter );
-router.use('/bye', byeRouter );
 
-
+router.use('/questions', questionsRouter);
 
 export default router;
