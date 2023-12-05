@@ -1,4 +1,4 @@
-import clientModel from './clients.model.js';
+import clientModel from "./clients.model.js";
 
 async function getAll() {
   const clients = await clientModel.find({}).lean();
@@ -7,7 +7,7 @@ async function getAll() {
 
 async function getByDocumentNumber({ documentNumber }) {
   const client = await clientModel
-    .findOne({ 'document.number': documentNumber })
+    .findOne({ "document.number": documentNumber })
     .lean();
   return client;
 }
@@ -22,6 +22,22 @@ async function getByFilter({ query }) {
   return filteredClients;
 }
 
+async function remove(id) {
+  const deletedClient = await clientModel.deleteOne({ _id: id });
+  return deletedClient;
+}
+
+async function put({ _id, newClient }) {
+  const updatedClient = await clientModel.findOneAndReplace({ _id }, newClient);
+  return updatedClient;
+}
+
+async function edit({ _id, body }) {
+  const editedClient = await clientModel.findOneAndReplace({ _id }, body, {
+    new: true,
+  });
+  return editedClient;
+}
 export {
-  getAll, getByDocumentNumber, post, getByFilter,
+  getAll, getByDocumentNumber, post, getByFilter, remove, put, edit,
 };

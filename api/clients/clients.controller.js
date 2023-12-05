@@ -43,6 +43,26 @@ async function getByFilter(req, res) {
   res.json(filteredClients);
 }
 
+async function remove(req, res) {
+  const { id } = req.params;
+  const deletedClient = await clientsService.remove(id);
+  res.json({ msg: 'client has been deleted', deletedClient });
+}
+
+async function put(req, res) {
+  const { id } = req.params;
+  const { body } = req;
+  const updatedClient = await clientsService.put({ _id: id, newClient: body });
+  res.json({ msg: 'updated client', updatedClient });
+}
+
+async function edit(req, res) {
+  const { id } = req.params;
+  const { body } = req;
+  const editedClient = await clientsService.edit(id, body);
+  res.json({ msg: 'new client', editedClient });
+}
+
 export {
-  getAll, getByDocumentNumber, post, getByFilter,
+  getAll, getByDocumentNumber, post, getByFilter, remove, put, edit,
 };
