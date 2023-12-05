@@ -1,9 +1,8 @@
 import Router from 'express';
-import questionsRouter from './questions/questions.router.js'
+import clientsRouter from './clients/clients.router.js';
 
 const router = Router();
 
-
-router.use('/questions', questionsRouter);
+router.use('/clients', clientsRouter);
 
 export default router;
