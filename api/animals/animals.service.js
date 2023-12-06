@@ -21,4 +21,13 @@ async function getByClientDocumentNumber({ clientDocumentNumber }) {
   return animals;
 }
 
-export { getAll, getByFilter, getByClientDocumentNumber };
+async function updateByClientDocumentNumber({ clientDocumentNumber, newProperties }) {
+  const client = await clientsService.getByDocumentNumber({ documentNumber: clientDocumentNumber });
+  const namedParams = { clientId: client._id, newProperties };
+  const updatedProperties = await animalsRepository.updateByClientId(namedParams);
+  return updatedProperties;
+}
+
+export {
+  getAll, getByFilter, getByClientDocumentNumber, updateByClientDocumentNumber,
+};

@@ -21,4 +21,14 @@ async function getByClientDocumentNumber({ clientId }) {
   return animals;
 }
 
-export { getAll, getByFilter, getByClientDocumentNumber };
+async function updateByClientId({ clientId, newProperties }) {
+  const updatedInfo = await animalModel.updateMany({ clientId }, newProperties, { new: true });
+  console.log(updatedInfo);
+
+  const updatedAnimals = await animalModel.find({ clientId }).lean();
+  return updatedAnimals;
+}
+
+export {
+  getAll, getByFilter, getByClientDocumentNumber, updateByClientId,
+};

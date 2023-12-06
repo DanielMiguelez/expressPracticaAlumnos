@@ -19,4 +19,17 @@ async function getByClientDocumentNumber(req, res) {
   res.json(animals);
 }
 
-export { getAll, getByFilter, getByClientDocumentNumber };
+async function updateByClientDocumentNumber(req, res) {
+  const clientDocumentNumber = req.params.number;
+  const newProperties = req.body;
+  const namedParams = { clientDocumentNumber, newProperties };
+  const updatedAnimals = await animalsService.updateByClientDocumentNumber(namedParams);
+  res.json(updatedAnimals);
+}
+
+export {
+  getAll,
+  getByFilter,
+  getByClientDocumentNumber,
+  updateByClientDocumentNumber,
+};
