@@ -1,4 +1,4 @@
-import clientModel from "./clients.model.js";
+import clientModel from './clients.model.js';
 
 async function getAll() {
   const clients = await clientModel.find({}).lean();
@@ -7,7 +7,7 @@ async function getAll() {
 
 async function getByDocumentNumber({ documentNumber }) {
   const client = await clientModel
-    .findOne({ "document.number": documentNumber })
+    .findOne({ 'document.number': documentNumber })
     .lean();
   return client;
 }
