@@ -6,19 +6,19 @@ function unauthorized(res) {
 }
 
 function isLogged(req, res, next) {
-  const publicRoutes = ['/auth/login', '/auth/register', '/clients/byFilter'];
-  const isPublicRoute = publicRoutes.some((publicRoute) =>
-    req.url.startsWith(publicRoute)
-  );
-  console.log(isPublicRoute);
 
+  const publicRoutes = ['/auth/login',
+  '/auth/register',
+  '/clients/byFilter',
+];
+
+  const isPublicRoute = publicRoutes.some((publicRoute) => req.url.startsWith(publicRoute));
   if (isPublicRoute) {
     next();
     return;
   }
 
   const token = req.headers.authorization;
-
   if (!token) {
     unauthorized(res);
     return;
@@ -32,8 +32,8 @@ function isLogged(req, res, next) {
       unauthorized(res);
       return;
     }
-
-    console.log(payload);
+    const user = userService.getById(payload.userId);
+    req.user = user;
   });
 
   next();
