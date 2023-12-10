@@ -1,6 +1,11 @@
 import * as clientsService from './clients.service.js';
 
 async function getAll(req, res) {
+  if (req.headers.authorization !== 'patata') {
+    res.status(401);
+    res.json({ msg: 'no autorizao' });
+    return;
+  }
   const msg = await clientsService.getAll();
   res.json({ msg });
 }
