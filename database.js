@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
 
-const MONGO_URL = 'mongodb+srv://DanielTheBridge:admin@danielthebridge.mi7avd2.mongodb.net/';
-const MONGO_DB_NAME = 'Veterinary_DB';
+dotenv.config();
+
+const { MONGO_URL, MONGO_DB_NAME } = process.env;
+
 const configDb = { dbName: MONGO_DB_NAME };
 
 try {

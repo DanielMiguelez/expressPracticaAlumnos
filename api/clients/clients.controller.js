@@ -1,8 +1,8 @@
 import * as clientsService from './clients.service.js';
 
 async function getAll(req, res) {
-  const msg = await clientsService.getAll();
-  res.json({ msg });
+  const clients = await clientsService.getAll();
+  res.json({ clients });
 }
 
 async function getByDocumentNumber(req, res) {

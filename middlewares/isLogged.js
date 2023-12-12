@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import * as userService from '../api/users/users.service.js';
 
 function unauthorized(res) {
   res.status(401);
@@ -6,11 +7,7 @@ function unauthorized(res) {
 }
 
 function isLogged(req, res, next) {
-
-  const publicRoutes = ['/auth/login',
-  '/auth/register',
-  '/clients/byFilter',
-];
+  const publicRoutes = ['/auth/login', '/auth/register', '/clients/byFilter'];
 
   const isPublicRoute = publicRoutes.some((publicRoute) => req.url.startsWith(publicRoute));
   if (isPublicRoute) {
@@ -24,15 +21,15 @@ function isLogged(req, res, next) {
     return;
   }
 
-  const secretWord = 'isASecret';
+  const { TOKEN_SECRET_WORD } = process.env;
 
-  jwt.verify(token, secretWord, (error, payload) => {
+  jwt.verify(token, TOKEN_SECRET_WORD, (error, payload) => {
     if (error) {
       console.error('jwt error');
       unauthorized(res);
       return;
     }
-    const user = userService.getById(payload.userId);
+    const user = userService.getById({ id: payload.userId });
     req.user = user;
   });
 
