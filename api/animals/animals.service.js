@@ -6,6 +6,14 @@ async function getAll() {
   return animals;
 }
 
+async function getPaginated({ page, itemsPerPage }) {
+  const skip = page * itemsPerPage;
+  const limit = itemsPerPage;
+
+  const animals = await animalsRepository.getPaginated({ skip, limit });
+  return animals;
+}
+
 async function getByFilter({ query }) {
   const animals = await animalsRepository.getByFilter({ query });
   return animals;
@@ -29,5 +37,5 @@ async function updateByClientDocumentNumber({ clientDocumentNumber, newPropertie
 }
 
 export {
-  getAll, getByFilter, getByClientDocumentNumber, updateByClientDocumentNumber,
+  getAll, getByFilter, getByClientDocumentNumber, updateByClientDocumentNumber, getPaginated,
 };

@@ -5,6 +5,12 @@ async function getAll(req, res) {
   res.json(animals);
 }
 
+async function getPaginated(req, res) {
+  const { page, itemsPerPage } = req.params;
+  const animals = await animalsService.getPaginated({ page, itemsPerPage });
+  res.json(animals);
+}
+
 async function getByFilter(req, res) {
   const { query } = req;
   const animals = await animalsService.getByFilter({ query });
@@ -32,4 +38,5 @@ export {
   getByFilter,
   getByClientDocumentNumber,
   updateByClientDocumentNumber,
+  getPaginated,
 };

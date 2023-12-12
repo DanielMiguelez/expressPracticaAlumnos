@@ -8,6 +8,16 @@ async function getAll(query) {
   return animals;
 }
 
+async function getPaginated({ skip, limit }) {
+  const animals = await animalModel
+    .find()
+    .skip(skip)
+    .limit(limit)
+    .populate({ path: 'clientId', select: 'name phone.number -_id' })
+    .lean();
+  return animals;
+}
+
 async function getByFilter({ query }) {
   const filteredAnimals = await animalModel.find(query).lean();
   return filteredAnimals;
@@ -30,5 +40,5 @@ async function updateByClientId({ clientId, newProperties }) {
 }
 
 export {
-  getAll, getByFilter, getByClientDocumentNumber, updateByClientId,
+  getAll, getByFilter, getByClientDocumentNumber, updateByClientId, getPaginated,
 };
