@@ -1,9 +1,10 @@
 import Router from 'express';
 import * as clientsController from './clients.controller.js';
+import isAdmin from '../../middlewares/isAdmin.js';
 
 const router = Router();
 
-router.get('/all', clientsController.getAll);
+router.get('/all', isAdmin, clientsController.getAll);
 router.get('/byFilter', clientsController.getByFilter);
 router.get('/document/:number', clientsController.getByDocumentNumber);
 router.post('/', clientsController.post);

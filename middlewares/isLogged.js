@@ -23,17 +23,22 @@ function isLogged(req, res, next) {
 
   const { TOKEN_SECRET_WORD } = process.env;
 
-  jwt.verify(token, TOKEN_SECRET_WORD, (error, payload) => {
+  jwt.verify(token, TOKEN_SECRET_WORD, async (error, payload) => {
     if (error) {
-      console.error('jwt error');
+      console.error('jwt error',error);
       unauthorized(res);
       return;
     }
-    const user = userService.getById({ id: payload.userId });
-    req.user = user;
-  });
 
-  next();
+    try {
+      const user = await userService.getById({ id: payload.userId });
+      req.user = user;
+      next();
+    } catch (err) {
+      console.error('Error retrieving user from database');
+      unauthorized(res);
+    }
+  });
 }
 
 export default isLogged;
